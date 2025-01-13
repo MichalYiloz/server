@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DAL.Models;
+using DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,9 @@ namespace DTO.classes
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
                 .ForMember(dest => dest.DiscussionId, opt => opt.MapFrom(src => src.DiscussionId))
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date));
+
+            CreateMap<Subject, GetSubjectDTO>()
+                .ForMember(dest => dest.DiscussionsCount, opt => opt.Ignore()); 
 
 
 

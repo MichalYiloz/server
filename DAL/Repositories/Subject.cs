@@ -101,5 +101,10 @@ namespace DAL.Repositories
                 throw;
             }
         }
+        public int CountOfDiscussionsForSubject(int subjectId)
+        {
+            return context.Discussions.Count(d => d.SubjectId == subjectId);
+        }
+
     }
 }

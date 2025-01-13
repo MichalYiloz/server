@@ -12,7 +12,7 @@ namespace BLL.Interfaces
         Task<SubjectDTO> AddNewSubjectAsync(SubjectDTO Subject);
         Task DeleteAsync(int id);
         Task<SubjectDTO> GetByIdAsync(int id);
-        Task<List<SubjectDTO>> GetAllSubjectsAsync();
+        Task<List<GetSubjectDTO>> GetAllSubjectsAsync();
         Task<SubjectDTO> UpdateAsync(SubjectDTO Subject);
     }
 }
