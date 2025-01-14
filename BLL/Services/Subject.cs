@@ -83,12 +83,18 @@ namespace BLL.Services
             }
         }
 
-        public async Task<SubjectDTO> GetByIdAsync(int id)
+        public async Task<GetByIDSubjectDTO> GetByIdAsync(int id)
         {
             try
             {
-                var answer= await SubjectRepository.GetByIdAsync(id);
-                return mapper.Map<SubjectDTO>(answer);
+                var answer = await SubjectRepository.GetByIdAsync(id);
+                var dto = mapper.Map<GetByIDSubjectDTO>(answer);
+
+                List<Discussion> discussions = await SubjectRepository.ListOfDiscussionsForSubject(id);
+                List<GetDiscussionDTO> discussionsDTO=mapper.Map<List<GetDiscussionDTO>>(discussions);
+                dto.Discussions =discussionsDTO ;
+
+                return dto;
             }
             catch (Exception ex)
             {

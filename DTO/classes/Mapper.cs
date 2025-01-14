@@ -47,9 +47,10 @@ namespace DTO.classes
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date));
 
             CreateMap<Subject, GetSubjectDTO>()
-                .ForMember(dest => dest.DiscussionsCount, opt => opt.Ignore()); 
+                .ForMember(dest => dest.DiscussionsCount, opt => opt.Ignore());
 
-
+            CreateMap<Subject, GetByIDSubjectDTO>()
+                .ForMember(dest => dest.Discussions, opt => opt.Ignore());
 
         }
     }

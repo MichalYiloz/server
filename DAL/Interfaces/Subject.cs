@@ -15,5 +15,7 @@ namespace DAL.Interfaces
         Task<Subject> AddAsync(Subject entity);
         Task DeleteAsync(int id);
         int CountOfDiscussionsForSubject(int subjectId);
+        Task<List<Discussion>> ListOfDiscussionsForSubject(int subjectId);
+
     }
 }

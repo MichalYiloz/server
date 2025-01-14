@@ -105,6 +105,15 @@ namespace DAL.Repositories
         {
             return context.Discussions.Count(d => d.SubjectId == subjectId);
         }
+       
+        public  Task<List<Discussion>> ListOfDiscussionsForSubject(int subjectId)
+        {
+            return  context.Discussions
+                                .Where(d => d.SubjectId == subjectId)
+                                .Include(d => d.User) 
+                                .Include(d => d.Comments) 
+                                .ToListAsync();
+        }
 
     }
 }
