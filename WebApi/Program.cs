@@ -1,6 +1,6 @@
-using BLL.Interfaces;
+ן»¿using BLL.Interfaces;
 using BLL.Services;
-using BLL.Validations; // הוספת שימוש ב-BLL.Validations
+using BLL.Validations;
 using DAL.Interfaces;
 using DAL.Models;
 using DAL.Repositories;
@@ -10,8 +10,11 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Load environment variables if needed
-// DotEnv.Load(options: new DotEnvOptions(envFilePaths: ["../.env.local"]));
+#if DEBUG
+Env.Load("../.env.local");
+#endif
+
+string clientUrl = Env.GetString("CLIENT_URL");
 
 // Configure DbContext
 builder.Services.AddDbContext<MyDbContext>();
@@ -43,30 +46,27 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
-        builder =>
-        {
-            builder
-            .AllowAnyOrigin()
-            .AllowAnyHeader()
-            .AllowAnyMethod();
-        });
+        builder => {
+            builder.WithOrigins(clientUrl);
+            builder.AllowAnyMethod();
+            builder.AllowAnyHeader();
+        }
+    );
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseCors(builder =>
-{
-    builder
-    .AllowAnyOrigin()
-    .AllowAnyHeader()
-    .AllowAnyMethod();
-});
-
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+
+app.UseCors();
+
 app.UseAuthorization();
 
 app.MapControllers();
