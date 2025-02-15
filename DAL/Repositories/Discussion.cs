@@ -112,7 +112,7 @@ namespace DAL.Repositories
                         if (item.DiscussionId == Id)
                             comments.Add(item);
                     }
-                    return comments.ToList();
+                    return discussion.Comments.Where(item => item.DiscussionId == Id).ToList();
                 }
             }
             catch (Exception ex)
